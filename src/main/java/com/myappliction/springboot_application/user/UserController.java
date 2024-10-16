@@ -1,9 +1,9 @@
 //This class acts as the API layer, that have all the REST APIs that the Client side can make use of.
 package com.myappliction.springboot_application.user;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -42,4 +42,5 @@ public class UserController {
                                      @RequestBody(required = false) String newEmail){
         userService.updateUserDetails(userId, newName, newEmail);
     }
+
 }

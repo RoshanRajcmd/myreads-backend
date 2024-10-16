@@ -1,6 +1,8 @@
 //This class is the server logic layer in that does validation/business logic in between the API(Controller) and DB service(Repository) layer
 package com.myappliction.springboot_application.user;
 
+import com.myappliction.springboot_application.user.exception.NoSuchUserExistsException;
+import com.myappliction.springboot_application.user.exception.UserAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,14 +27,14 @@ public class UserService {
         Optional<User> userByEmail = userRepository.findUserByEmail(newUser.getEmail());
         //if there is any value in the result of JPQL Query then it means the email is already been registered by someone
         if(userByEmail.isPresent()){
-            throw new IllegalStateException("Email is Taken");
+            throw new UserAlreadyExistsException("Email is Taken");
         }
         userRepository.save(newUser);
     }
 
     public void deleteUser(Long userId){
         if(!userRepository.existsById(userId)){
-            throw new IllegalStateException("No User found by the given ID");
+            throw new NoSuchUserExistsException("No User found by the given ID");
         }
         else{
             userRepository.deleteById(userId);
@@ -40,7 +42,7 @@ public class UserService {
     }
 
     public void updateUserDetails(Long userId, String newName, String newEmail){
-        User userById = userRepository.findById(userId).orElseThrow(() -> new IllegalStateException("No User found by the given ID"));
+        User userById = userRepository.findById(userId).orElseThrow(() -> new UserAlreadyExistsException("No User found by the given ID"));
         if(newName != null &&
                 !newName.isEmpty() &&
                 !Objects.equals(userById.getName(), newName)) {
