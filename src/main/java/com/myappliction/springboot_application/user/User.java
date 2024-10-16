@@ -1,4 +1,4 @@
-package com.myappliction.springboot_application.student;
+package com.myappliction.springboot_application.user;
 
 import jakarta.persistence.*;
 
@@ -7,7 +7,7 @@ import java.time.Period;
 
 @Entity
 @Table
-public class Student {
+public class User {
     @Id
     @SequenceGenerator(
             name = "student_sequence",
@@ -28,17 +28,17 @@ public class Student {
     @Transient
     private Integer age;
 
-    public Student() {
+    public User() {
     }
 
-    public Student(Long id, String name, LocalDate dob, String email) {
+    public User(Long id, String name, LocalDate dob, String email) {
         this.id = id;
         this.name = name;
         this.dob = dob;
         this.email = email;
     }
 
-    public Student(String name, LocalDate dob, String email){
+    public User(String name, LocalDate dob, String email){
         this.name = name;
         this.dob = dob;
         this.email = email;

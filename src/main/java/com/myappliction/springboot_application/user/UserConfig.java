@@ -1,4 +1,4 @@
-package com.myappliction.springboot_application.student;
+package com.myappliction.springboot_application.user;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -9,16 +9,16 @@ import java.time.Month;
 import java.util.List;
 
 @Configuration
-public class StudentConfig {
+public class UserConfig {
 
     @Bean
-    CommandLineRunner commandLineRunner(StudentRepository repository){
+    CommandLineRunner commandLineRunner(UserRepository repository){
         return args -> {
-            Student roshan =new Student(
+            User roshan =new User(
                     "Roshan",
                     LocalDate.of(1999, Month.DECEMBER,5),
                     "test@email.com");
-            Student chitra = new Student(
+            User chitra = new User(
                     "Chitra",
                     LocalDate.of(1973, Month.FEBRUARY,12),
                     "chitra@email.com");
