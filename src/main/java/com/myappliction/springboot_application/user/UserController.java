@@ -18,7 +18,10 @@ public class UserController {
     }
 
     //API to get all the Users in Users table along with its details
-    @GetMapping
+    //The CrossOrigin annotation is used when the API is getting access from other ports like when the front end of the
+    //application is trying to access the API from the request mapping path
+    @GetMapping(path = "getUsers")
+    @CrossOrigin
     public List<User> getUsers(){
         return userService.getUsers();
     }
