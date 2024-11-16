@@ -1,5 +1,6 @@
-package com.myappliction.springboot_application.user.exception;
+package com.myappliction.springboot_application.exception.bookException;
 
+import com.myappliction.springboot_application.exception.ApiException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -9,10 +10,10 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 @ControllerAdvice
-public class UserExceptionHandler {
+public class BookExceptionHandler {
 
-    @ExceptionHandler(value = UserAlreadyExistsException.class)
-    public ResponseEntity<Object> handleCustomerAlreadyExistsException(UserAlreadyExistsException ex) {
+    @ExceptionHandler(value = BookAlreadyExistsException.class)
+    public ResponseEntity<Object> handleCustomerAlreadyExistsException(BookAlreadyExistsException ex) {
         ApiException apiException =  new ApiException(
                 ex.getMessage(),
                 HttpStatus.CONFLICT,
@@ -21,8 +22,8 @@ public class UserExceptionHandler {
         return new ResponseEntity<>(apiException, HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(value = NoSuchUserExistsException.class)
-    public ResponseEntity<Object> handleNoSuchUserExistsException(NoSuchUserExistsException ex) {
+    @ExceptionHandler(value = NoSuchBookExistsException.class)
+    public ResponseEntity<Object> handleNoSuchUserExistsException(NoSuchBookExistsException ex) {
         ApiException apiException =  new ApiException(
                 ex.getMessage(),
                 HttpStatus.NOT_FOUND,

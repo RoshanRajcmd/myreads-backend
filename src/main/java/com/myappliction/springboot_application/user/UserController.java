@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path="api/v1/user")
+@RequestMapping(path="/myreads/api/v1/user")
 public class UserController {
 
     private final UserService userService;
@@ -20,10 +20,10 @@ public class UserController {
     //API to get all the Users in Users table along with its details
     //The CrossOrigin annotation is used when the API is getting access from other ports like when the front end of the
     //application is trying to access the API from the request mapping path
-    @GetMapping(path = "getUsers")
+    @GetMapping(path = "getAllUsers")
     @CrossOrigin
-    public List<User> getUsers(){
-        return userService.getUsers();
+    public List<User> getAllUsers(){
+        return userService.getAllUsers();
     }
 
     //API to add a new User into the table
