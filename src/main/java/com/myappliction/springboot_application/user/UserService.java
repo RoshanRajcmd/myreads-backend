@@ -26,6 +26,11 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User getUser(Long userId){
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new NoSuchUserExistsException("No User found by the given ID"));
+    }
+
     //Add the given User in the Database
     public void addNewUser(User newUser){
         //if there is any value in the result of JPQL Query then it means the email is already been registered by someone
@@ -39,15 +44,12 @@ public class UserService {
 
     //Delete the given User in Database by userId
     public void deleteUser(Long userId){
-        User userById = userRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchUserExistsException("No User found by the given ID"));
-        userRepository.deleteById(userId);
+        userRepository.deleteById(getUser(userId).getId());
     }
 
     //Update the details of given user in Database
     public void updateUserDetails(Long userId, String newName, String newEmail){
-        User userById = userRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchUserExistsException("No User found by the given ID"));
+        User userById = getUser(userId);
         if(newName != null &&
                 !newName.isEmpty() &&
                 !Objects.equals(userById.getName(), newName)) {
@@ -62,18 +64,14 @@ public class UserService {
 
     //Gets the Books under the given User
     public Set<Book> getUsersBooks(Long userId){
-        User userById = userRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchUserExistsException("No User found by the given ID"));
-        return userById.getBooksList();
+        return getUser(userId).getBooksList();
     }
 
     //Validates the given password and user email
 
 
     //Gets all the friends of the given User
-    public Set<User> getFriendsOfUser(Long userId){
-        User userById = userRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchUserExistsException("No User found by the given ID"));
-        return userById.getFriends();
+    public Set<Long> getFriendsOfUser(Long userId){
+        return getUser(userId).getFriendsIds();
     }
 }

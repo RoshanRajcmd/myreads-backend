@@ -7,9 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Configuration
 public class UserConfig {
@@ -28,7 +26,7 @@ public class UserConfig {
                     "test@email.com",
                     "password1",
                     new HashSet<Book>(bookList1),
-                    new HashSet<User>());
+                    new HashSet<Long>());
 
 
             User chitra = new User(
@@ -37,7 +35,7 @@ public class UserConfig {
                     "chitra@email.com",
                     "password2",
                     new HashSet<Book>(),
-                    new HashSet<User>());
+                    new HashSet<Long>(Arrays.asList(roshan.getId())));
 
             repository.saveAll(List.of(roshan, chitra));
         };

@@ -28,8 +28,10 @@ public class UserController {
 
     //API to add a new User into the table
     @PostMapping
-    public void registerNewUser(@RequestBody User newUser){
+    public String registerNewUser(@RequestBody User newUser){
+        //need a try catch block
         userService.addNewUser(newUser);
+        return "redirect:/registration?success";
     }
 
     //API to delete a User from the table
