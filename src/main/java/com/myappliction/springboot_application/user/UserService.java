@@ -5,15 +5,21 @@ package com.myappliction.springboot_application.user;
 import com.myappliction.springboot_application.book.Book;
 import com.myappliction.springboot_application.exception.userException.NoSuchUserExistsException;
 import com.myappliction.springboot_application.exception.userException.UserAlreadyExistsException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.logging.Logger;
 
 @Service
 public class UserService {
+    private static Logger log;
     private final UserRepository userRepository;
 
     @Autowired
@@ -26,28 +32,30 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User getUser(Long userId){
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new NoSuchUserExistsException("No User found by the given ID"));
+    }
+
     //Add the given User in the Database
     public void addNewUser(User newUser){
         //if there is any value in the result of JPQL Query then it means the email is already been registered by someone
-        if(userRepository.findById(newUser.getId()).isPresent() ||
-                userRepository.findUserByEmail(newUser.getEmail()).isPresent()){
+        if(userRepository.findUserByEmail(newUser.getEmail()).isPresent()){
             throw new UserAlreadyExistsException("Email is Taken");
         }
-        else
+        else {
             userRepository.save(newUser);
+        }
     }
 
     //Delete the given User in Database by userId
     public void deleteUser(Long userId){
-        User userById = userRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchUserExistsException("No User found by the given ID"));
-        userRepository.deleteById(userId);
+        userRepository.deleteById(getUser(userId).getId());
     }
 
     //Update the details of given user in Database
     public void updateUserDetails(Long userId, String newName, String newEmail){
-        User userById = userRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchUserExistsException("No User found by the given ID"));
+        User userById = getUser(userId);
         if(newName != null &&
                 !newName.isEmpty() &&
                 !Objects.equals(userById.getName(), newName)) {
@@ -58,22 +66,24 @@ public class UserService {
                 !Objects.equals(userById.getEmail(), newEmail)) {
             userById.setEmail(newEmail);
         }
+        userRepository.save(userById);
     }
 
     //Gets the Books under the given User
-    public Set<Book> getUsersBooks(Long userId){
-        User userById = userRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchUserExistsException("No User found by the given ID"));
-        return userById.getBooksList();
-    }
+//    public Page<Book> getUsersBooks(Long userId, int page, int size){
+//        return getUser(userId).getBooksList(PageRequest.of(page, size, Sort.by("name")));
+//    }
 
     //Validates the given password and user email
+    public boolean validateUserCred(String email, String password){
+        User userByMail = userRepository.findUserByEmail(email)
+                .orElseThrow(() -> new NoSuchUserExistsException("No User found by the given Email"));
+        return userByMail.getPassword().equals(password);
+    }
 
 
     //Gets all the friends of the given User
-    public Set<User> getFriendsOfUser(Long userId){
-        User userById = userRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchUserExistsException("No User found by the given ID"));
-        return userById.getFriends();
+    public Set<Long> getFriendsOfUser(Long userId){
+        return getUser(userId).getFriendsIds();
     }
 }

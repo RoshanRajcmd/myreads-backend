@@ -1,6 +1,8 @@
 package com.myappliction.springboot_application.user;
 import com.myappliction.springboot_application.book.Book;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -8,7 +10,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@Table(name ="users")
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,36 +24,23 @@ public class User {
     // value will be show in DB, if this annotation used it will not display this age column in DB.
     @Transient
     private Integer age;
+    @Column(unique = true)
     private String email;
     private String password;
-    @OneToMany
-    private Set<User> friends = new HashSet<User>();
+    private Set<Long> friendsIds;
     //Cascade All to initialize the child object in the DB while initializing Part object and its columns
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Book> booksList = new HashSet<Book>();
 
-    public User() {
-    }
-
-    public User(Long userId, String name, LocalDate dob, String email, String password,
-                Set<Book> booksList, Set<User> friends) {
-        this.userId = userId;
-        this.name = name;
-        this.dob = dob;
-        this.email = email;
-        this.password = password;
-        this.booksList = booksList;
-        this.friends = friends;
-    }
 
     public User(String name, LocalDate dob, String email, String password,
-                Set<Book> booksList, Set<User> friends){
+                Set<Book> booksList, Set<Long> friendsIds){
         this.name = name;
         this.dob = dob;
         this.email = email;
         this.password = password;
         this.booksList = booksList;
-        this.friends = friends;
+        this.friendsIds = friendsIds;
     }
 
     public Long getId() {
@@ -100,12 +91,12 @@ public class User {
         this.age = age;
     }
 
-    public Set<User> getFriends() {
-        return friends;
+    public Set<Long> getFriendsIds() {
+        return friendsIds;
     }
 
-    public void setFriends(Set<User> friends) {
-        this.friends = friends;
+    public void setFriendsIds(Set<Long> friendsIds) {
+        this.friendsIds = friendsIds;
     }
 
     public Set<Book> getBooksList() {

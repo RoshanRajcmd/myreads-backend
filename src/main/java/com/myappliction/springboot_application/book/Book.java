@@ -1,9 +1,14 @@
 package com.myappliction.springboot_application.book;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 
 @Entity
-@Table
+@Table(name ="books")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,17 +17,6 @@ public class Book {
     private String summary;
     private LocalDate publishedOn;
     private String author;
-
-    public Book() {
-    }
-
-    public Book(Long bookId, String title, String summary, LocalDate publishedOn, String author) {
-        this.bookId = bookId;
-        this.title = title;
-        this.summary = summary;
-        this.publishedOn = publishedOn;
-        this.author = author;
-    }
 
     public Book(String title, String summary, LocalDate publishedOn, String author) {
         this.title = title;
