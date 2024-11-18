@@ -26,7 +26,7 @@ public class UserConfig {
                     "test@email.com",
                     "password1",
                     new HashSet<Book>(bookList1),
-                    new HashSet<Long>());
+                    null);
 
 
             User chitra = new User(
@@ -34,8 +34,8 @@ public class UserConfig {
                     LocalDate.of(1973, Month.FEBRUARY,12),
                     "chitra@email.com",
                     "password2",
-                    new HashSet<Book>(),
-                    new HashSet<Long>(Arrays.asList(roshan.getId())));
+                    null,
+                    null);
 
             repository.saveAll(List.of(roshan, chitra));
         };

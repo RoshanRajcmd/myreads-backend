@@ -32,4 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 
-.application.properties
+mybookslist_sql_commands.sql
