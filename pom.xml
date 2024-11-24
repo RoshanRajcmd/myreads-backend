@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.myappliction</groupId>
-	<artifactId>springboot-application</artifactId>
+	<artifactId>myreads-backend-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>springboot-application</name>
 	<description>Demo project for Spring Boot</description>

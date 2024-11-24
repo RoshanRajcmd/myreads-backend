@@ -23,7 +23,7 @@ public class UserConfig {
             User roshan =new User(
                     "Roshan",
                     LocalDate.of(1999, Month.DECEMBER,5),
-                    "test@email.com",
+                    "test@gmail.com",
                     "password1",
                     new HashSet<Book>(bookList1),
                     null);
@@ -32,7 +32,7 @@ public class UserConfig {
             User chitra = new User(
                     "Chitra",
                     LocalDate.of(1973, Month.FEBRUARY,12),
-                    "chitra@email.com",
+                    "chitra@gmail.com",
                     "password2",
                     null,
                     null);
