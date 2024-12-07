@@ -31,6 +31,12 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    //Checks if given email id is already taken by someone
+    @GetMapping(path = "/checkEmailExists/{email}")
+    public boolean isUserByEmailExist(@PathVariable("email") String email){
+        return userService.isUserByEmailExist(email);
+    }
+
     //Validates the user credentials given in Database
     @GetMapping(path = "/validateUser")
     public boolean validateUserCred(@RequestParam(value="email", defaultValue = "") String email,
