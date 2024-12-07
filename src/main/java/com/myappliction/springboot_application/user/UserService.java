@@ -32,6 +32,12 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    //Returns True if the given email exists in user table of database
+    public boolean isUserByEmailExist(String email){
+        //if there is any value in the result of JPQL Query then it means the email is already been registered by someone
+        return userRepository.findUserByEmail(email).isPresent();
+    }
+
     public User getUser(Long userId){
         return userRepository.findById(userId)
                 .orElseThrow(() -> new NoSuchUserExistsException("No User found by the given ID"));
@@ -39,8 +45,7 @@ public class UserService {
 
     //Add the given User in the Database
     public void addNewUser(User newUser){
-        //if there is any value in the result of JPQL Query then it means the email is already been registered by someone
-        if(userRepository.findUserByEmail(newUser.getEmail()).isPresent()){
+        if(isUserByEmailExist(newUser.getEmail())){
             throw new UserAlreadyExistsException("Email is Taken");
         }
         else {
