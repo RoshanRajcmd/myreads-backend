@@ -22,7 +22,7 @@ public class UserConfig {
                     "John Ronald Reuel Tolkien"));
             User roshan =new User(
                     "Roshan",
-                    LocalDate.of(1999, Month.DECEMBER,5),
+                    "1999-12-05",
                     "test@gmail.com",
                     "password1",
                     new HashSet<Book>(bookList1),
@@ -31,7 +31,7 @@ public class UserConfig {
 
             User chitra = new User(
                     "Chitra",
-                    LocalDate.of(1973, Month.FEBRUARY,12),
+                    "1973-02-12",
                     "chitra@gmail.com",
                     "password2",
                     null,

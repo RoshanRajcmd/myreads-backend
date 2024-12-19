@@ -1,19 +1,23 @@
 //This class acts as the API layer, that have all the REST APIs that the Client side can make use of.
 package com.myappliction.springboot_application.user;
 
-
-import com.myappliction.springboot_application.book.Book;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping(path="/myreads/api/v1/user")
 public class UserController {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     private final UserService userService;
 
@@ -46,10 +50,9 @@ public class UserController {
 
     //API to add a new User into the table
     @PostMapping
+    @RequestMapping(path = "/addNewUser", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addNewUser(@RequestBody User newUser){
-        //need a try catch block
         userService.addNewUser(newUser);
-        //return ResponseEntity.created(URI.create("userId")).body(userService.addNewUser(newUser));
     }
 
     //API to delete a User from the table

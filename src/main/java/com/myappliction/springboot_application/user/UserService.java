@@ -2,14 +2,9 @@
 //the API(Controller) and DB service(Repository) layer
 package com.myappliction.springboot_application.user;
 
-import com.myappliction.springboot_application.book.Book;
 import com.myappliction.springboot_application.exception.userException.NoSuchUserExistsException;
 import com.myappliction.springboot_application.exception.userException.UserAlreadyExistsException;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -83,6 +78,8 @@ public class UserService {
     public boolean validateUserCred(String email, String password){
         User userByMail = userRepository.findUserByEmail(email)
                 .orElseThrow(() -> new NoSuchUserExistsException("No User found by the given Email"));
+        //TODO - Need to give user id or username as a unique identifier to the front end so that id can be given
+        // as input for further api call to fetch data
         return userByMail.getPassword().equals(password);
     }
 
