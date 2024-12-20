@@ -1,10 +1,10 @@
 # Tech Stack and Frameworks
-React.js 
-Tailwind
-Font Awesome
-Toastify
-MySQL
-Spring Boot with Hibernate and Spring Security
+* React.js 
+* Tailwind
+* Font Awesome
+* Toastify
+* MySQL
+* Spring Boot with Hibernate and Spring Security
 
 # Features
 1. User session handling throughout the website
