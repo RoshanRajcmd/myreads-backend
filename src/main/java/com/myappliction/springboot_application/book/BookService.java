@@ -2,15 +2,13 @@ package com.myappliction.springboot_application.book;
 
 import com.myappliction.springboot_application.exception.bookException.BookAlreadyExistsException;
 import com.myappliction.springboot_application.exception.bookException.NoSuchBookExistsException;
-import com.myappliction.springboot_application.exception.userException.NoSuchUserExistsException;
-import com.myappliction.springboot_application.exception.userException.UserAlreadyExistsException;
-import com.myappliction.springboot_application.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 public class BookService {
@@ -35,14 +33,14 @@ public class BookService {
     }
 
     //Delete a Book in the Database
-    public void deleteBook(Long bookId){
+    public void deleteBook(UUID bookId){
         Book bookById = bookRepository.findById(bookId)
                 .orElseThrow(() -> new NoSuchBookExistsException("No Book found by the given ID"));
         bookRepository.deleteById(bookId);
     }
 
     //Update Details of a Book in Database
-    public void updateBookDetails(Long bookId, String newTitle, String summary, LocalDate publishedOn, String author){
+    public void updateBookDetails(UUID bookId, String newTitle, String summary, LocalDate publishedOn, String author){
         Book bookById = bookRepository.findById(bookId)
                 .orElseThrow(() -> new NoSuchBookExistsException("No Book found by the given ID"));
         if(newTitle != null &&

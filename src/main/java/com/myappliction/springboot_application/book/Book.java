@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Table(name ="books")
@@ -11,8 +12,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID bookId;
     private String title;
     private String summary;
     private LocalDate publishedOn;
@@ -25,11 +26,11 @@ public class Book {
         this.author = author;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return bookId;
     }
 
-    public void setId(Long bookId) {
+    public void setId(UUID bookId) {
         this.bookId = bookId;
     }
 
