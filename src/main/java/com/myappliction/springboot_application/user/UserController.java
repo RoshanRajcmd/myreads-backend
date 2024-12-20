@@ -9,7 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -43,7 +42,7 @@ public class UserController {
 
     //Validates the user credentials given in Database
     @GetMapping(path = "/validateUser")
-    public boolean validateUserCred(@RequestParam(value="email", defaultValue = "") String email,
+    public String validateUserCred(@RequestParam(value="email", defaultValue = "") String email,
                                     @RequestParam(value="password", defaultValue = "") String password){
         return userService.validateUserCred(email,password);
     }
@@ -57,13 +56,13 @@ public class UserController {
 
     //API to delete a User from the table
     @DeleteMapping(path = "{userId}")
-    public void deleteUser(@PathVariable("userId") Long userId){
+    public void deleteUser(@PathVariable("userId") String userId){
         userService.deleteUser(userId);
     }
 
     //API to update name and email of a User from the table
     @PutMapping(path = "{userId}")
-    public void updateUserDetails(@PathVariable("userId") Long userId,
+    public void updateUserDetails(@PathVariable("userId") String userId,
                                      @RequestParam(value="newName", defaultValue = "") String newName,
                                      @RequestParam(value="newEmail", defaultValue = "") String newEmail){
         userService.updateUserDetails(userId, newName, newEmail);

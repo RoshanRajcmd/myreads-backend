@@ -1,5 +1,4 @@
 package com.myappliction.springboot_application.user;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.myappliction.springboot_application.book.Book;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,6 +9,7 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name ="users")
@@ -17,9 +17,9 @@ import java.util.Set;
 @AllArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true)
-    private Long userId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID userId;
     private String name;
     private String dob;
     //Transient is to tell the Hibernate API that this column will be handled in the runtime and does not need to be
@@ -46,11 +46,11 @@ public class User {
         this.friendsIds = friendsIds;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return userId;
     }
 
-    public void setId(Long userId) {
+    public void setId(UUID userId) {
         this.userId = userId;
     }
 

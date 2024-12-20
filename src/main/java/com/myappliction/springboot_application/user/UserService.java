@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 @Service
@@ -33,8 +34,8 @@ public class UserService {
         return userRepository.findUserByEmail(email).isPresent();
     }
 
-    public User getUser(Long userId){
-        return userRepository.findById(userId)
+    public User getUser(String userId){
+        return userRepository.findById(UUID.fromString(userId))
                 .orElseThrow(() -> new NoSuchUserExistsException("No User found by the given ID"));
     }
 
@@ -49,12 +50,12 @@ public class UserService {
     }
 
     //Delete the given User in Database by userId
-    public void deleteUser(Long userId){
-        userRepository.deleteById(getUser(userId).getId());
+    public void deleteUser(String userId){
+        userRepository.deleteById(UUID.fromString(userId));
     }
 
     //Update the details of given user in Database
-    public void updateUserDetails(Long userId, String newName, String newEmail){
+    public void updateUserDetails(String userId, String newName, String newEmail){
         User userById = getUser(userId);
         if(newName != null &&
                 !newName.isEmpty() &&
@@ -74,18 +75,19 @@ public class UserService {
 //        return getUser(userId).getBooksList(PageRequest.of(page, size, Sort.by("name")));
 //    }
 
-    //Validates the given password and user email
-    public boolean validateUserCred(String email, String password){
+    //Validates the given password and user email and returns the user if exists by the given credentials
+    public String validateUserCred(String email, String password){
         User userByMail = userRepository.findUserByEmail(email)
                 .orElseThrow(() -> new NoSuchUserExistsException("No User found by the given Email"));
-        //TODO - Need to give user id or username as a unique identifier to the front end so that id can be given
-        // as input for further api call to fetch data
-        return userByMail.getPassword().equals(password);
+        if(userByMail.getPassword().equals(password))
+            return userByMail.getId().toString();
+        else
+            return "";
     }
 
 
     //Gets all the friends of the given User
-    public Set<Long> getFriendsOfUser(Long userId){
+    public Set<Long> getFriendsOfUser(String userId){
         return getUser(userId).getFriendsIds();
     }
 }
