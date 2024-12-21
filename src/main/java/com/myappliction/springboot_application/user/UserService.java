@@ -51,7 +51,10 @@ public class UserService {
 
     //Delete the given User in Database by userId
     public void deleteUser(String userId){
-        userRepository.deleteById(UUID.fromString(userId));
+        if(userRepository.existsById(UUID.fromString(userId)))
+            userRepository.deleteById(UUID.fromString(userId));
+        else
+            throw new NoSuchUserExistsException("No Such User Exits");
     }
 
     //Update the details of given user in Database
