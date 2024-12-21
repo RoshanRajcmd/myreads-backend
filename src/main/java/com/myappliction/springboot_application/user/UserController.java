@@ -34,6 +34,12 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    //Gives all the details of user by the given Id
+    @GetMapping(path = "/getUserDetails/{userId}")
+    public User getUserByID(@PathVariable("userId") String userId){
+        return userService.getUser(userId);
+    }
+
     //Checks if given email id is already taken by someone
     @GetMapping(path = "/checkEmailExists/{email}")
     public boolean isUserByEmailExist(@PathVariable("email") String email){
@@ -55,13 +61,13 @@ public class UserController {
     }
 
     //API to delete a User from the table
-    @DeleteMapping(path = "{userId}")
+    @DeleteMapping(path = "/deleteUser/{userId}")
     public void deleteUser(@PathVariable("userId") String userId){
         userService.deleteUser(userId);
     }
 
     //API to update name and email of a User from the table
-    @PutMapping(path = "{userId}")
+    @PutMapping(path = "/updateUser/{userId}")
     public void updateUserDetails(@PathVariable("userId") String userId,
                                      @RequestParam(value="newName", defaultValue = "") String newName,
                                      @RequestParam(value="newEmail", defaultValue = "") String newEmail){

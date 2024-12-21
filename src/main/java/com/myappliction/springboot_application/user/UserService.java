@@ -54,7 +54,7 @@ public class UserService {
         if(userRepository.existsById(UUID.fromString(userId)))
             userRepository.deleteById(UUID.fromString(userId));
         else
-            throw new NoSuchUserExistsException("No Such User Exits");
+            throw new NoSuchUserExistsException("No User found by the given ID");
     }
 
     //Update the details of given user in Database
