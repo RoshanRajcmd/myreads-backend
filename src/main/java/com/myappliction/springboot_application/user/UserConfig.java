@@ -21,7 +21,8 @@ public class UserConfig {
                     LocalDate.of(1954, Month.JULY,29),
                     "John Ronald Reuel Tolkien"));
             User roshan =new User(
-                    "Roshan",
+                    "Roshan Raj",
+                    "Roshan1",
                     "1999-12-05",
                     "test@gmail.com",
                     "password1",
@@ -31,6 +32,7 @@ public class UserConfig {
 
             User chitra = new User(
                     "Chitra",
+                    "Chitra1",
                     "1973-02-12",
                     "chitra@gmail.com",
                     "password2",
