@@ -67,7 +67,7 @@ public class UserController {
     }
 
     //API to update name and email of a User from the table
-    @PutMapping(path = "/updateUser/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(path = "/updateUserDetails/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateUserDetails(@PathVariable("userId") String userId,
                                      @RequestBody User user){
         userService.updateUserDetails(userId, user);
