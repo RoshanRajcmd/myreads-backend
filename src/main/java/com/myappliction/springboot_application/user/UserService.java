@@ -94,6 +94,9 @@ public class UserService {
             return "";
     }
 
+    public boolean isUserByUsernameExist(String username) {
+        return userRepository.findUserByUsername(username).isPresent();
+    }
 
     //Gets all the friends of the given User
     public Set<Long> getFriendsOfUser(String userId){

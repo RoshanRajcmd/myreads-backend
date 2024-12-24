@@ -34,7 +34,7 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    //Gives all the details of user by the given Id
+    //Gives all the details of user by the given ID
     @GetMapping(path = "/getUserDetails/{userId}")
     public User getUserByID(@PathVariable("userId") String userId){
         return userService.getUser(userId);
@@ -51,6 +51,11 @@ public class UserController {
     public String validateUserCred(@RequestParam(value="email", defaultValue = "") String email,
                                     @RequestParam(value="password", defaultValue = "") String password){
         return userService.validateUserCred(email,password);
+    }
+
+    @GetMapping(path = "/checkUsernameExists/{username}")
+    public boolean isUserByUsernameExist(@PathVariable(value="username") String username){
+        return userService.isUserByUsernameExist(username);
     }
 
     //API to add a new User into the table
