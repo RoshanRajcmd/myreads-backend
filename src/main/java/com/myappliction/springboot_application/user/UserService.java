@@ -97,20 +97,18 @@ public class UserService {
         return userRepository.findUserByUsername(username).isPresent();
     }
 
-    //Gets all the friends of the given User
-    public Set<Long> getFriendsOfUser(String userId){
-        return getUser(userId).getFriendsIds();
-    }
-
     public boolean isOldPasswordValid(String userId, String oldPassword) {
         User user = getUser(userId);
         return user.getPassword().equals(oldPassword);
     }
 
-
-
     //Gets the Books under the given User
     public Page<Book> getUsersBooks(String userId, int page, int size){
         return getUser(userId).getBooksList(PageRequest.of(page, size, Sort.by("name")));
+    }
+
+    //Gets all the friends of the given User
+    public Set<Long> getFriendsOfUser(String userId){
+        return getUser(userId).getFriendsIds();
     }
 }
