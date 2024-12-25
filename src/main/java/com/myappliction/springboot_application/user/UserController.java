@@ -89,10 +89,10 @@ public class UserController {
 
     //Get all books marked under given user
     @GetMapping(path = "/getUserBooks/{userId}/")
-    public ResponseEntity<Page<Book>> getUsersBooks(@PathVariable("userId") String userId,
+    public Page<Book> getUsersBooks(@PathVariable("userId") String userId,
                                                     @RequestParam(value="page", defaultValue = "0") int page,
                                                     @RequestParam(value ="size", defaultValue = "10") int size){
-        return ResponseEntity.ok().body(userService.getUsersBooks(userId, page, size));
+        return userService.getUsersBooks(userId, page, size);
     }
 
 }

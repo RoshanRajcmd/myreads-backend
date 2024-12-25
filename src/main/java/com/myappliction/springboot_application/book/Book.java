@@ -15,6 +15,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID bookId;
     private String title;
+    @Column(length = 1000)
     private String summary;
     private LocalDate publishedOn;
     private String author;
