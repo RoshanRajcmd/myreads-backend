@@ -51,21 +51,30 @@ public class UserService {
 
     //Delete the given User in Database by userId
     public void deleteUser(String userId){
-        userRepository.deleteById(UUID.fromString(userId));
+        if(userRepository.existsById(UUID.fromString(userId)))
+            userRepository.deleteById(UUID.fromString(userId));
+        else
+            throw new NoSuchUserExistsException("No User found by the given ID");
     }
 
     //Update the details of given user in Database
-    public void updateUserDetails(String userId, String newName, String newEmail){
+    public void updateUserDetails(String userId, User updateUser){
         User userById = getUser(userId);
-        if(newName != null &&
-                !newName.isEmpty() &&
-                !Objects.equals(userById.getName(), newName)) {
-            userById.setName(newName);
+
+        if(updateUser.getFullName() != null &&
+                !updateUser.getFullName() .isEmpty() &&
+                !Objects.equals(userById.getFullName(), updateUser.getFullName())) {
+            userById.setFullName(updateUser.getFullName() );
         }
-        if(newEmail != null &&
-                !newEmail.isEmpty() &&
-                !Objects.equals(userById.getEmail(), newEmail)) {
-            userById.setEmail(newEmail);
+        if(updateUser.getUserName() != null &&
+                !updateUser.getUserName() .isEmpty() &&
+                !Objects.equals(userById.getUserName(), updateUser.getUserName() )) {
+            userById.setUserName(updateUser.getUserName() );
+        }
+        if(updateUser.getPassword() != null &&
+                !updateUser.getPassword() .isEmpty() &&
+                !Objects.equals(userById.getPassword(), updateUser.getPassword() )) {
+            userById.setPassword(updateUser.getPassword() );
         }
         userRepository.save(userById);
     }
@@ -85,9 +94,17 @@ public class UserService {
             return "";
     }
 
+    public boolean isUserByUsernameExist(String username) {
+        return userRepository.findUserByUsername(username).isPresent();
+    }
 
     //Gets all the friends of the given User
     public Set<Long> getFriendsOfUser(String userId){
         return getUser(userId).getFriendsIds();
+    }
+
+    public boolean isOldPasswordValid(String userId, String oldPassword) {
+        User user = getUser(userId);
+        return user.getPassword().equals(oldPassword);
     }
 }

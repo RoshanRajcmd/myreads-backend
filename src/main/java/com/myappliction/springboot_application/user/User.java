@@ -20,7 +20,8 @@ public class User {
     @Column(unique = true)
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID userId;
-    private String name;
+    private String fullName;
+    private String userName;
     private String dob;
     //Transient is to tell the Hibernate API that this column will be handled in the runtime and does not need to be
     //stored in the DB. If you don't use this annotation the age will get calculated and shown in the web but that null
@@ -36,9 +37,10 @@ public class User {
     private Set<Book> booksList = new HashSet<Book>();
 
 
-    public User(String name, String dob, String email, String password,
+    public User(String fullName, String userName, String dob, String email, String password,
                 Set<Book> booksList, Set<Long> friendsIds){
-        this.name = name;
+        this.fullName = fullName;
+        this.userName = userName;
         this.dob = dob;
         this.email = email;
         this.password = password;
@@ -54,13 +56,17 @@ public class User {
         this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
+
+    public String getUserName() { return userName; }
+
+    public void setUserName(String userName) { this.userName = userName; }
 
     public String getDob() {
         return dob;

@@ -34,6 +34,12 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    //Gives all the details of user by the given ID
+    @GetMapping(path = "/getUserDetails/{userId}")
+    public User getUserByID(@PathVariable("userId") String userId){
+        return userService.getUser(userId);
+    }
+
     //Checks if given email id is already taken by someone
     @GetMapping(path = "/checkEmailExists/{email}")
     public boolean isUserByEmailExist(@PathVariable("email") String email){
@@ -47,6 +53,17 @@ public class UserController {
         return userService.validateUserCred(email,password);
     }
 
+    @GetMapping(path = "/checkUsernameExists/{username}")
+    public boolean isUserByUsernameExist(@PathVariable(value="username") String username){
+        return userService.isUserByUsernameExist(username);
+    }
+
+    @GetMapping(path = "/checkOldPasswordValid")
+    public boolean isOldPasswordValid(@RequestParam(value="userId", defaultValue = "") String userId,
+                                      @RequestParam(value="oldPassword", defaultValue = "") String oldPassword){
+        return userService.isOldPasswordValid(userId, oldPassword);
+    }
+
     //API to add a new User into the table
     @PostMapping
     @RequestMapping(path = "/addNewUser", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -55,17 +72,16 @@ public class UserController {
     }
 
     //API to delete a User from the table
-    @DeleteMapping(path = "{userId}")
+    @DeleteMapping(path = "/deleteUser/{userId}")
     public void deleteUser(@PathVariable("userId") String userId){
         userService.deleteUser(userId);
     }
 
     //API to update name and email of a User from the table
-    @PutMapping(path = "{userId}")
+    @PutMapping(path = "/updateUserDetails/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateUserDetails(@PathVariable("userId") String userId,
-                                     @RequestParam(value="newName", defaultValue = "") String newName,
-                                     @RequestParam(value="newEmail", defaultValue = "") String newEmail){
-        userService.updateUserDetails(userId, newName, newEmail);
+                                     @RequestBody User user){
+        userService.updateUserDetails(userId, user);
     }
 
     //Get all books marked under given user
