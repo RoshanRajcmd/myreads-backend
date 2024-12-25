@@ -2,9 +2,13 @@
 //the API(Controller) and DB service(Repository) layer
 package com.myappliction.springboot_application.user;
 
+import com.myappliction.springboot_application.book.Book;
 import com.myappliction.springboot_application.exception.userException.NoSuchUserExistsException;
 import com.myappliction.springboot_application.exception.userException.UserAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -79,11 +83,6 @@ public class UserService {
         userRepository.save(userById);
     }
 
-    //Gets the Books under the given User
-//    public Page<Book> getUsersBooks(Long userId, int page, int size){
-//        return getUser(userId).getBooksList(PageRequest.of(page, size, Sort.by("name")));
-//    }
-
     //Validates the given password and user email and returns the user if exists by the given credentials
     public String validateUserCred(String email, String password){
         User userByMail = userRepository.findUserByEmail(email)
@@ -106,5 +105,12 @@ public class UserService {
     public boolean isOldPasswordValid(String userId, String oldPassword) {
         User user = getUser(userId);
         return user.getPassword().equals(oldPassword);
+    }
+
+
+
+    //Gets the Books under the given User
+    public Page<Book> getUsersBooks(String userId, int page, int size){
+        return getUser(userId).getBooksList(PageRequest.of(page, size, Sort.by("name")));
     }
 }
