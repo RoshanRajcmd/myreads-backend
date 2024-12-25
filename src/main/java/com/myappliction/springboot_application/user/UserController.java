@@ -1,11 +1,14 @@
 //This class acts as the API layer, that have all the REST APIs that the Client side can make use of.
 package com.myappliction.springboot_application.user;
 
+import com.myappliction.springboot_application.book.Book;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -85,11 +88,11 @@ public class UserController {
     }
 
     //Get all books marked under given user
-//    @GetMapping(path = "getUserBooks")
-//    public ResponseEntity<Page<Book>> getUsersBooks(@RequestBody(required = true) Long userId,
-//                                                    @RequestParam(value="page", defaultValue = "0") int page,
-//                                                    @RequestParam(value ="size", defaultValue = "10") int size){
-//        return ResponseEntity.ok().body(userService.getUsersBooks(userId, page, size));
-//    }
+    @GetMapping(path = "/getUserBooks/{userId}/")
+    public Page<Book> getUsersBooks(@PathVariable("userId") String userId,
+                                                    @RequestParam(value="page", defaultValue = "0") int page,
+                                                    @RequestParam(value ="size", defaultValue = "10") int size){
+        return userService.getUsersBooks(userId, page, size);
+    }
 
 }

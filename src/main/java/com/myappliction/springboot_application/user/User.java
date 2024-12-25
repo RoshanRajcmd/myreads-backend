@@ -1,5 +1,8 @@
 package com.myappliction.springboot_application.user;
 import com.myappliction.springboot_application.book.Book;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -7,9 +10,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name ="users")
@@ -112,6 +113,13 @@ public class User {
 
     public Set<Book> getBooksList() {
         return booksList;
+    }
+
+    public Page<Book> getBooksList(Pageable pageable) {
+        List<Book> books = new ArrayList<>(booksList);
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), books.size());
+        return new PageImpl<>(books.subList(start, end), pageable, books.size());
     }
 
     public void setBooksList(Set<Book> booksList) {
