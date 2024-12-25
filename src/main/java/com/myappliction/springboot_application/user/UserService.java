@@ -102,4 +102,9 @@ public class UserService {
     public Set<Long> getFriendsOfUser(String userId){
         return getUser(userId).getFriendsIds();
     }
+
+    public boolean isOldPasswordValid(String userId, String oldPassword) {
+        User user = getUser(userId);
+        return user.getPassword().equals(oldPassword);
+    }
 }

@@ -24,7 +24,7 @@ public class UserConfig {
                     "Roshan Raj",
                     "Roshan1",
                     "1999-12-05",
-                    "test@gmail.com",
+                    "roshan@gmail.com",
                     "password1",
                     new HashSet<Book>(bookList1),
                     null);

@@ -58,6 +58,12 @@ public class UserController {
         return userService.isUserByUsernameExist(username);
     }
 
+    @GetMapping(path = "/checkOldPasswordValid")
+    public boolean isOldPasswordValid(@RequestParam(value="userId", defaultValue = "") String userId,
+                                      @RequestParam(value="oldPassword", defaultValue = "") String oldPassword){
+        return userService.isOldPasswordValid(userId, oldPassword);
+    }
+
     //API to add a new User into the table
     @PostMapping
     @RequestMapping(path = "/addNewUser", consumes = MediaType.APPLICATION_JSON_VALUE)
