@@ -95,4 +95,25 @@ public class UserController {
         return userService.getUsersBooks(userId, page, size);
     }
 
+    @PostMapping
+    @RequestMapping(path = "/addBookToUser/{userId}/{newBookId}")
+    public void addBookToUserByBookId(@PathVariable("userId") String userId,
+                                      @PathVariable("newBookId") String newBookId){
+        userService.addBookToUserByBookId(userId, newBookId);
+    }
+
+    @PostMapping
+    @RequestMapping(path = "/addBookToUser/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void addBookToUserByBookObject(@PathVariable("userId") String userId,
+                              @RequestBody Book newBook){
+        userService.addBookToUserByBookObject(userId, newBook);
+    }
+
+    @DeleteMapping
+    @RequestMapping(path = "/deleteBookFromUser/{userId}/{bookId}")
+    public void deleteBookFromUser(@PathVariable("userId") String userId,
+                                   @PathVariable("bookId") String bookId){
+        userService.deleteBookFromUser(userId, bookId);
+    }
+
 }

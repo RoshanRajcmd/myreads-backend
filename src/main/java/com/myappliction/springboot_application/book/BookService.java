@@ -23,9 +23,15 @@ public class BookService {
         return bookRepository.findAll();
     }
 
+    //Returns the Book by the given bookId
+    public Book getBook(UUID bookId){
+        return bookRepository.findById(bookId)
+                .orElseThrow(() -> new NoSuchBookExistsException("No Book found by the given ID"));
+    }
+
     //Add the given Book in the Database
     public void addBook(Book newBook){
-        if(bookRepository.findById(newBook.getId()).isPresent()){
+        if(bookRepository.findBookByTitle(newBook.getTitle()).isPresent()){
             throw new BookAlreadyExistsException("Book Already Exists");
         }
         else
