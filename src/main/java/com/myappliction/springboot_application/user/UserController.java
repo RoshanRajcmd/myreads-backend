@@ -116,4 +116,9 @@ public class UserController {
         userService.deleteBookFromUser(userId, bookId);
     }
 
+    @GetMapping
+    @RequestMapping(path = "/searchBooks/{bookTitle}")
+    public List<Book> searchBooks(@PathVariable("bookTitle") String bookTitle){
+        return userService.searchBooks(bookTitle);
+    }
 }

@@ -138,4 +138,8 @@ public class UserService {
         userByID.getBooksList().remove(bookById);
         userRepository.save(userByID);
     }
+
+    public List<Book> searchBooks(String bookTitle) {
+        return bookService.findBooksByTitle(bookTitle);
+    }
 }
