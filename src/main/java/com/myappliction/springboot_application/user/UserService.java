@@ -142,4 +142,9 @@ public class UserService {
     public List<Book> searchBooks(String bookTitle) {
         return bookService.findBooksByTitle(bookTitle);
     }
+
+    public boolean isBookExistUnderUser(String userId, String bookId) {
+        Book bookById = bookService.getBook(UUID.fromString(bookId));
+        return getUser(userId).getBooksList().contains(bookById);
+    }
 }

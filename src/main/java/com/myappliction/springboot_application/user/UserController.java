@@ -121,4 +121,11 @@ public class UserController {
     public List<Book> searchBooks(@PathVariable("bookTitle") String bookTitle){
         return userService.searchBooks(bookTitle);
     }
+
+    @GetMapping
+    @RequestMapping(path = "/isBookExistUnderUser/{userId}/{bookId}")
+    public boolean isBookExistUnderUser(@PathVariable("userId") String userId,
+                                        @PathVariable("bookId") String bookId){
+        return userService.isBookExistUnderUser(userId, bookId);
+    }
 }
