@@ -34,7 +34,7 @@ public class User {
     private String password;
     private Set<Long> friendsIds;
     //Cascade All to initialize the child object in the DB while initializing Part object and its columns
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private Set<Book> booksList = new HashSet<Book>();
 
 
